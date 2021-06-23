@@ -24,6 +24,12 @@
 - before calculation data is displayed as table: coefficients as columns and bet websites as rows
 - when data changes show visually - cell with coeff number changes color to green when increases, red when decreases
 - count average according to coefficient steps and display it later
-- according to some situations employee must close trading - sound and notification sould be displayed
+
+- !according to some situations employee must close trading - sound and notification should be displayed
+(this should be always checked every time the request to the website is being made and then istead of coefficients corresponding warning should be sent to client side)
 
 ## Application 2 - API to save data
+- client side (all the possible notifications etc.)
+- server creates request to Application 1 to get current coefficient data and/or notification
+- when data received it is being 1. displayed on client side 2. saved to logs 3. saved to database
+- classical REST style application with Controllers, Services and Repositories
