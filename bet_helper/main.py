@@ -13,7 +13,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 marathon_url = 'https://www.marathonbet.ru/su/live/11773589'
-fonbet_url = 'https://www.fonbet.kz/live/basketball/67021/28917554'
+fonbet_url = 'https://www.fonbet.kz/live/basketball/63113/28919248'
 is_working = True
 
 
