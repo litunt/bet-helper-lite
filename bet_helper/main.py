@@ -12,8 +12,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-marathon_url = 'https://www.marathonbet.ru/su/betting/Basketball/Internationals/World+Cup/Men/2023/Qualification/Americas/2nd+Round/Santiago/Bolivia+vs+Paraguay+-+11820190'
-fonbet_url = 'https://www.fonbet.kz/live/basketball/67021/28955609'
+marathon_url = 'https://www.marathonbet.ru/su/live/11773589'
+fonbet_url = 'https://www.fonbet.kz/live/basketball/63113/28946284'
 is_working = True
 
 

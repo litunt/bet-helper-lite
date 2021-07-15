@@ -16,12 +16,27 @@ class FonbetParser(AbstractParser):
 
         founded_tags = soup.find_all(tag, attrs=class_attributes)
 
+        score = None
         home_team_moneyline = None
         away_team_moneyline = None
         home_team_handicap = None
         away_team_handicap = None
         under = None
         over = None
+
+        score_table_tag = 'div'
+        score_table_class_attributes = 'ev-score-table--35j-H'
+        founded_score_table = soup.find(score_table_tag, class_=score_table_class_attributes)
+        score_tag = 'div'
+        score_class_attributes = 'ev-score--2aHgg _main--XcabF'
+        # TODO:sometimes can be NoneType, approximately bcs score is changing and have another class attribute
+        founded_score_tags = founded_score_table.find_all(score_tag, class_=score_class_attributes)
+        home_team_score = founded_score_tags[0].text
+        # TODO: index error sometimes, dunno why
+        away_team_score = founded_score_tags[1].text
+        score = Score.create_object(int(home_team_score), int(away_team_score))
+        print(score)
+
         for tag in founded_tags:
 
             result_text_tag = 'div'
@@ -92,6 +107,5 @@ class FonbetParser(AbstractParser):
                                 under = (total, total_coef_tags[0].text)
                                 over = (total, total_coef_tags[1].text)
 
-                        print(under, over)
                         break
         pass
