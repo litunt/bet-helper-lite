@@ -68,16 +68,14 @@ class FonbetParser(AbstractParser):
                         total_coef_tags = []
 
                         total = None
-                        coeff = None
                         # parse total value and coeffs related to it
                         if len(lines) == 3:
                             total_value_tags = lines[1].find_all('div',
                                                                  class_='cell-align-wrap--3gwzh _align-left--3sEXl')
                             total_coef_tags = lines[1].find_all('div', class_='v---x8Cq _v-only--2MX1l')
                             total = total_value_tags[0].text.split('\xa0')[1]
-                            print(total)
-                            coeff = (total_coef_tags[0].text, total_coef_tags[1].text)
-                            print(coeff)
+                            under = (total, total_coef_tags[0].text)
+                            over = (total, total_coef_tags[1].text)
 
                         else:
                             total_value_tags = lines[0].find_all('div',
@@ -86,14 +84,14 @@ class FonbetParser(AbstractParser):
                                                                 class_='v---x8Cq _v-only--2MX1l')
                             if len(total_value_tags) > 1:
                                 total = total_value_tags[1].text.split('\xa0')[1]
-                                coeff = (total_coef_tags[2].text, total_coef_tags[3].text)
+                                under = (total, total_coef_tags[2].text)
+                                over = (total, total_coef_tags[3].text)
+
                             else:
                                 total = total_value_tags[0].text.split('\xa0')[1]
-                                coeff = (total_coef_tags[0].text, total_coef_tags[1].text)
+                                under = (total, total_coef_tags[0].text)
+                                over = (total, total_coef_tags[1].text)
 
-                            print(total)
-                            print(coeff)
-
+                        print(under, over)
                         break
-
         pass

@@ -34,6 +34,7 @@ class MarathonbetParser(AbstractParser):
 
         soup = BeautifulSoup(self.web_driver.page_source, 'lxml')
 
+        # TODO: throws error if try parse prematch, because it has not attr 'event-description'(this tags holds score in live)
         trash = ['', '\n']
         score_tag = 'td'
         score_attributes = {'class': 'event-description'}
