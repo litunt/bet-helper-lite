@@ -54,22 +54,44 @@ class FonbetParser(AbstractParser):
 
             if tag.find('div', class_='text--1Vjli') and tag.find('div',
                                                                   class_='text--1Vjli').text == 'Total points':
-                # TODO: часто выводится больше 1ого тотала, выбрать нужный.
-                # TODO: предпологаемое решение '&nbsp;' проблемы.
-                test = soup.find_all('div', class_='market-group-box--13myO')
-                clean_tag_list = []
-                for t in test:
-                    if t.find('div', class_='text--1Vjli') and t.find('div',
-                                                                  class_='text--1Vjli').text == 'Total points':
-                        # test_tags = t.find_all('div', class_='row-common--1kY83')
-                        # '\xa0'
-                        test_tags = t.find_all('div', class_='cell-align-wrap--3gwzh _align-left--3sEXl')
-                        clean_tag_list = []
-                        for tag in test_tags:
-                            if tag.text != '':
-                                clean_tag_list.append(tag.text)
-                        clean_tag_list = set(clean_tag_list)
-                        break
 
-        print(clean_tag_list)
+                totals = soup.find_all('div', class_='market-group-box--13myO')
+                clean_values_tag_list = []
+                for t in totals:
+                    if t.find('div', class_='text--1Vjli') and t.find('div',
+                                                                      class_='text--1Vjli').text == 'Total points':
+                        # total_value_tags = t.find_all('div', class_='row-common--1kY83')
+                        # '\xa0'
+
+                        lines = t.find_all('div', class_='row-common--1kY83')
+                        total_value_tags = []
+                        total_coef_tags = []
+
+                        total = None
+                        # parse total value and coeffs related to it
+                        if len(lines) == 3:
+                            total_value_tags = lines[1].find_all('div',
+                                                                 class_='cell-align-wrap--3gwzh _align-left--3sEXl')
+                            total_coef_tags = lines[1].find_all('div', class_='v---x8Cq _v-only--2MX1l')
+                            total = total_value_tags[0].text.split('\xa0')[1]
+                            under = (total, total_coef_tags[0].text)
+                            over = (total, total_coef_tags[1].text)
+
+                        else:
+                            total_value_tags = lines[0].find_all('div',
+                                                                 class_='cell-align-wrap--3gwzh _align-left--3sEXl')
+                            total_coef_tags = lines[0].find_all('div',
+                                                                class_='v---x8Cq _v-only--2MX1l')
+                            if len(total_value_tags) > 1:
+                                total = total_value_tags[1].text.split('\xa0')[1]
+                                under = (total, total_coef_tags[2].text)
+                                over = (total, total_coef_tags[3].text)
+
+                            else:
+                                total = total_value_tags[0].text.split('\xa0')[1]
+                                under = (total, total_coef_tags[0].text)
+                                over = (total, total_coef_tags[1].text)
+
+                        print(under, over)
+                        break
         pass
