@@ -5,7 +5,7 @@ class Score:
 
     @classmethod
     def create_object(cls, *args):
-        # method that allows call multiple constructors
+        # method that allows calling multiple constructors
         if isinstance(args[0], str) and len(args) == 1:  # Score.create_object('15:11')
             score = args[0].split(':')
             home_score = int(score[0])
