@@ -9,6 +9,7 @@ class FonbetParser(AbstractParser):
         pass
 
     def get_game_state(self):
+        time.sleep(self.updating_frequency)
         soup = BeautifulSoup(self.web_driver.page_source, 'lxml')
 
         tag = 'div'
@@ -32,7 +33,7 @@ class FonbetParser(AbstractParser):
         # TODO:sometimes can be NoneType, approximately bcs score is changing and have another class attribute
         founded_score_tags = founded_score_table.find_all(score_tag, class_=score_class_attributes)
         home_team_score = founded_score_tags[0].text
-        # TODO: index error sometimes, dunno why
+        # TODO: index error sometimes, dunno why, but apprximately bcs score turns grey color
         away_team_score = founded_score_tags[1].text
         score = Score.create_object(int(home_team_score), int(away_team_score))
         print(score)
@@ -108,4 +109,5 @@ class FonbetParser(AbstractParser):
                                 over = (total, total_coef_tags[1].text)
 
                         break
-        pass
+        return MatchState(score, float(home_team_moneyline), float(away_team_moneyline), home_team_handicap, away_team_handicap,
+                          under, over)
