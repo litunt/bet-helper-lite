@@ -13,7 +13,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 marathon_url = 'https://www.marathonbet.ru/su/live/11773589'
-fonbet_url = 'https://www.fonbet.kz/live/basketball/63113/29003813'
+fonbet_url = 'https://www.fonbet.kz/live/basketball/67263/29051291'
 is_working = True
 
 
@@ -64,9 +64,10 @@ if __name__ == '__main__':
         fonbet_parser = FonbetParser(driver)
 
         fonbet_parser.set_frequency(2)
+        fonbet_parser.get_team_names()
 
-        for i in range(0, 15):
-            print(fonbet_parser.get_game_state())
+        # for i in range(0, 15):
+        #     print(fonbet_parser.get_game_state())
 
     except Exception:
         traceback.print_exc()
