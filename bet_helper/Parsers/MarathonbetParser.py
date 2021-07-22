@@ -26,7 +26,7 @@ class MarathonbetParser(AbstractParser):
 
             away_team_name = founded_tags[0].text.replace('\n', '')
             home_team_name = founded_tags[1].text.replace('\n', '')
-            return [home_team_name, away_team_name]
+            return home_team_name, away_team_name
 
     def get_game_state(self):
         # creating delay between parsing iterations
