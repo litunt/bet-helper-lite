@@ -6,7 +6,19 @@ class FonbetParser(AbstractParser):
         super().__init__(web_driver)
 
     def get_team_names(self):
-        pass
+        soup = BeautifulSoup(self.web_driver.page_source, 'lxml')
+
+        table_tag = 'div'
+        table_class_attributes = 'ev-score-table__main--16Rvn'
+        founded_table = soup.find(table_tag, class_=table_class_attributes)
+
+        team_names_tag = 'span'
+        team_names_class_attributes = 'ev-team__name--3zWY8 _live--2gx4G'
+        founded_team_names = founded_table.find_all(team_names_tag, class_=team_names_class_attributes)
+        home_team_name = founded_team_names[0].text
+        away_team_name = founded_team_names[1].text
+
+        return home_team_name, away_team_name
 
     def get_game_state(self):
         time.sleep(self.updating_frequency)
