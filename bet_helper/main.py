@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from bet_helper.Parsers.AbstractParser import *
 from bet_helper.Parsers.MarathonbetParser import *
 from bet_helper.Parsers.FonbetParser import *
+from bet_helper.Logger.Logger import *
 import time
 import traceback
 import random
@@ -13,7 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 marathon_url = 'https://www.marathonbet.ru/su/live/11773589'
-fonbet_url = 'https://www.fonbet.kz/live/basketball/67263/29051291'
+fonbet_url = 'https://www.fonbet.kz/live/basketball/63122/29118573'
 is_working = True
 
 
@@ -62,12 +63,17 @@ if __name__ == '__main__':
             fonbet_url = input()
         navigate_to_english_version()
         fonbet_parser = FonbetParser(driver)
+        fonbet_parser.set_frequency(3)
 
-        fonbet_parser.set_frequency(2)
-        fonbet_parser.get_team_names()
+        home_team = fonbet_parser.get_team_names()[0]
+        away_team = fonbet_parser.get_team_names()[1]
 
-        # for i in range(0, 15):
-        #     print(fonbet_parser.get_game_state())
+        logger = Logger(home_team, away_team)
+        logger.start()
+        for i in range(6):
+            actual_game_state = fonbet_parser.get_game_state()
+            logger.receive_game_state(actual_game_state)
+
 
     except Exception:
         traceback.print_exc()
@@ -76,4 +82,5 @@ if __name__ == '__main__':
         time.sleep(3)
         driver.close()
         driver.quit()
+        logger.stop()
         print("Web-Driver has successfully stopped")

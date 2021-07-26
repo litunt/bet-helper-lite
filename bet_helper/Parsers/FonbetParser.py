@@ -14,6 +14,7 @@ class FonbetParser(AbstractParser):
 
         team_names_tag = 'span'
         team_names_class_attributes = 'ev-team__name--3zWY8 _live--2gx4G'
+        # TODO: sometime returns NoneType
         founded_team_names = founded_table.find_all(team_names_tag, class_=team_names_class_attributes)
         home_team_name = founded_team_names[0].text
         away_team_name = founded_team_names[1].text
@@ -48,7 +49,6 @@ class FonbetParser(AbstractParser):
         # TODO: index error sometimes, dunno why, but apprximately bcs score turns grey color
         away_team_score = founded_score_tags[1].text
         score = Score.create_object(int(home_team_score), int(away_team_score))
-        print(score)
 
         for tag in founded_tags:
 
@@ -64,6 +64,7 @@ class FonbetParser(AbstractParser):
                 away_team_moneyline = moneylines[1].text
 
             # TODO: часто выводится больше 1ого гандикапа, выбрать нужный.
+            # TODO: eсли больше одного гандикапа на сайте, то путает их местами
             handicap_text_tag = 'div'
             handicap_text_attribute = 'text--1Vjli'
             if tag.find(handicap_text_tag, class_=handicap_text_attribute) \
@@ -111,6 +112,7 @@ class FonbetParser(AbstractParser):
                             total_coef_tags = lines[0].find_all('div',
                                                                 class_='v---x8Cq _v-only--2MX1l')
                             if len(total_value_tags) > 1:
+                                # TODO: видимо когда 2 тотала(не 3), вырасывает IndexError
                                 total = total_value_tags[1].text.split('\xa0')[1]
                                 under = (total, total_coef_tags[2].text)
                                 over = (total, total_coef_tags[3].text)
