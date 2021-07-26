@@ -15,6 +15,7 @@ class Logger:
                          ' vs ' + self.away_team_name + '.txt'
         self.file_name = self.file_name.replace(' ', '')
         self.f = None
+        # TODO: create "logs" directory using os library and add check if it already exists (try - except OSError)
 
     def receive_game_state(self, game_state: MatchState):
         self.write_to_file(game_state)
@@ -24,6 +25,7 @@ class Logger:
         self.create_file()
 
     def create_file(self):
+        print(self.file_name)
         self.f = open(self.file_name, 'w+', encoding='utf-8')
 
         now = datetime.now()
