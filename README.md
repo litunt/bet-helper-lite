@@ -2,7 +2,6 @@
 
 ## Database system
 - PostgreSQL
-- Hibernate to integrate with Java and see some shit
 - Mybatis to better understand how to write SQL
 
 ## Data saved to DB
